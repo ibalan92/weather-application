@@ -8,6 +8,7 @@ var historyList = [];
 searchBtn.addEventListener("click", function(event){
     event.preventDefault();
     citySearched = city.value;
+    if(citySearched !== ""){
     console.log(city.value);
     checkHistory(citySearched);
     var queryURL = "http://api.openweathermap.org/geo/1.0/direct?q="+ citySearched + "&limit=5&appid=" + APIkey
@@ -31,10 +32,11 @@ searchBtn.addEventListener("click", function(event){
         .then(function(data) {
             console.log(data)
             today(data);
-            forecast();
+            setForecastTitle();
             console.log(data.list[0].weather[0].icon)
         });
     });
+    }
 
 });
 
@@ -77,9 +79,9 @@ function today(element){
 }
 
 var forecastTitle = document.createElement("h4");
-function forecast(){
+function setForecastTitle(){
     forecastTitle.textContent = "5-Day Forecast:";
-    forecastTitle.setAttribute("class", "fw-bold")
+    forecastTitle.setAttribute("class", "fw-bold p-2")
     var forecastEl = document.getElementById("forecast");
     forecastEl.appendChild(forecastTitle);
 }
