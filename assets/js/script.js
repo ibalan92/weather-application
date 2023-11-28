@@ -37,7 +37,12 @@ searchBtn.addEventListener("click", function(event){
 function checkHistory(exists){
     if( historyList.includes(exists) === false){
         historyList.push(exists);
-        console.log(historyList)
+        console.log(historyList);
+        var button = document.createElement("button");
+        button.setAttribute("class", "btn btn-secondary text-dark p-2")
+        button.textContent = exists;
+        historyEl.appendChild(button);
     }
+    
 }
 
