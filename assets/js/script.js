@@ -31,6 +31,7 @@ searchBtn.addEventListener("click", function(event){
         .then(function(data) {
             console.log(data)
             today(data);
+            forecast();
             console.log(data.list[0].weather[0].icon)
         });
     });
@@ -57,7 +58,7 @@ var icon = document.createElement("img");
 function today(element){
     var todayBox = document.getElementById("today");
     var iconURL = "http://openweathermap.org/img/w/" + element.list[0].weather[0].icon + ".png"
-    todayDate = dayjs().format("DD/MM/YYYY");
+    todayDate = dayjs().format("DD/M/YYYY");
     todayEl.textContent = element.city.name + " " + todayDate + " ";
     todayEl.setAttribute("class", "p-2")
     var celsius = Math.round(element.list[0].main.temp - 273.15);
@@ -75,3 +76,10 @@ function today(element){
     todayBox.setAttribute("class","border border-dark mt-3")
 }
 
+var forecastTitle = document.createElement("h4");
+function forecast(){
+    forecastTitle.textContent = "5-Day Forecast:";
+    forecastTitle.setAttribute("class", "fw-bold")
+    var forecastEl = document.getElementById("forecast");
+    forecastEl.appendChild(forecastTitle);
+}
