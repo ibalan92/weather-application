@@ -53,15 +53,20 @@ var weatherInfo = document.createElement("ul");
 var temp = document.createElement("li");
 var wind = document.createElement("li");
 var humidity = document.createElement("li");
+var icon = document.createElement("img");
 function today(element){
     var todayBox = document.getElementById("today");
+    var iconURL = "http://openweathermap.org/img/w/" + element.list[0].weather[0].icon + ".png"
     todayDate = dayjs().format("DD/MM/YYYY");
     todayEl.textContent = element.city.name + " " + todayDate + " ";
+    todayEl.setAttribute("class", "p-2")
     var celsius = Math.round(element.list[0].main.temp - 273.15);
     temp.textContent = "Temp: " + celsius + " °C";
     wind.textContent = "Wind: " + element.list[0].wind.speed + " KPH";
     humidity.textContent = "Humidity: " + element.list[0].main.humidity + "%";
-    weatherInfo.setAttribute("class", "list-unstyled");
+    weatherInfo.setAttribute("class", "list-unstyled p-2 d-grid gap-3");
+    icon.setAttribute("src", iconURL);
+    todayEl.appendChild(icon);
     weatherInfo.appendChild(temp);
     weatherInfo.appendChild(wind);
     weatherInfo.appendChild(humidity);
