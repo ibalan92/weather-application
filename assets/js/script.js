@@ -1,11 +1,14 @@
 var searchBtn = document.getElementById("search-button")
 var city = document.getElementById("search-input")
 var APIkey ="b7c8404eb7ec2db5624c4a872e9ce2d3"
+var historyEl = document.getElementById("history")
+var historyList = [];
 
 searchBtn.addEventListener("click", function(event){
     event.preventDefault();
     citySearched = city.value;
-    console.log(city.value)
+    console.log(city.value);
+    checkHistory(citySearched);
     var queryURL = "http://api.openweathermap.org/geo/1.0/direct?q="+ citySearched + "&limit=5&appid=" + APIkey
             
     fetch(queryURL)
@@ -31,5 +34,10 @@ searchBtn.addEventListener("click", function(event){
 
 });
 
-
+function checkHistory(exists){
+    if( historyList.includes(exists) === false){
+        historyList.push(exists);
+        console.log(historyList)
+    }
+}
 
