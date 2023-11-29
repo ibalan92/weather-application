@@ -3,12 +3,12 @@ var city = document.getElementById("search-input")
 var APIkey ="b7c8404eb7ec2db5624c4a872e9ce2d3"
 var historyEl = document.getElementById("history")
 var historyList = [];
-
+var lastSearchedCity = "";
 
 searchBtn.addEventListener("click", function(event){
     event.preventDefault();
     citySearched = city.value;
-    if(citySearched !== ""){
+    if(citySearched !== "" && citySearched !== lastSearchedCity){
     console.log(city.value);
     checkHistory(citySearched);
     var queryURL = "http://api.openweathermap.org/geo/1.0/direct?q="+ citySearched + "&limit=5&appid=" + APIkey
@@ -35,7 +35,10 @@ searchBtn.addEventListener("click", function(event){
             setForecastTitle();
             console.log(data.list[0].weather[0].icon)
             var weatherData = data.list;
+            if(citySearched !== lastSearchedCity ){
             forecast(weatherData);
+            lastSearchedCity = citySearched;
+            }
         });
     });
     }
