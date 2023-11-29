@@ -44,6 +44,7 @@ searchBtn.addEventListener("click", function(event){
             var weatherData = data.list;
 
             forecastEl.innerHTML = "";
+            todayDay = parseInt(todayDate = dayjs().format("DD"));
             if(citySearched !== lastSearchedCity ){
                 forecast(weatherData);
                 lastSearchedCity = citySearched;
@@ -98,8 +99,7 @@ var todayDay = parseInt(todayDate = dayjs().format("DD"));
 var cardInfo = document.createElement("ul");
 function forecast(element){
     setForecastTitle();
-        for(j=0;j<element.length;j++){
-            
+        for(j=0;j<element.length;j++){  
             var cardTitle = document.createElement("h2");
             var cardInfo = document.createElement("ul");
             var cardTemp = document.createElement("li");
@@ -124,7 +124,7 @@ function forecast(element){
                 cardInfo.appendChild(cardHumidity);
                 forecastEl.appendChild(cardInfo);
                 forecastEl.setAttribute("class","row mt-3");
-                todayDay =forecastDay;
+                todayDay = forecastDay;
             }
         }
     }
