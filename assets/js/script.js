@@ -34,6 +34,8 @@ searchBtn.addEventListener("click", function(event){
             today(data);
             setForecastTitle();
             console.log(data.list[0].weather[0].icon)
+            var weatherData = data.list;
+            forecast(weatherData);
         });
     });
     }
@@ -79,9 +81,42 @@ function today(element){
 }
 
 var forecastTitle = document.createElement("h4");
+var forecastEl = document.getElementById("forecast");
 function setForecastTitle(){
     forecastTitle.textContent = "5-Day Forecast:";
     forecastTitle.setAttribute("class", "fw-bold p-2")
-    var forecastEl = document.getElementById("forecast");
     forecastEl.appendChild(forecastTitle);
 }
+
+var todayDay = parseInt(todayDate = dayjs().format("DD"));
+function forecast(element){
+        for(j=0;j<element.length;j++){
+            var cardTitle = document.createElement("h2");
+        var cardInfo = document.createElement("ul");
+        var cardTemp = document.createElement("li");
+        var cardWind = document.createElement("li");
+        var cardHumidity = document.createElement("li");
+        var cardIcon = document.createElement("img");
+            var forecastDay = parseInt((element[j].dt_txt).slice(8,10));
+
+            if(todayDay !== forecastDay){
+                var iconURL = "http://openweathermap.org/img/w/" + element[j].weather[0].icon + ".png"
+                cardTitle.textContent = (element[j].dt_txt).slice(8,10) + "/" + (element[j].dt_txt).slice(5, 7) + "/" + (element[j].dt_txt).slice(0, 4);
+                cardTitle.setAttribute("class", "p-1 fs-4")
+                var celsius = Math.round(element[j].main.temp - 273.15);
+                cardTemp.textContent = "Temp: " + celsius + " °C";
+                cardWind.textContent = "Wind: " + element[j].wind.speed + " KPH";
+                cardHumidity.textContent = "Humidity: " + element[j].main.humidity + "%";
+                cardInfo.setAttribute("class", "col list-unstyled me-2 d-grid gap-3 border border-dark");
+                cardIcon.setAttribute("src", iconURL);
+                cardInfo.appendChild(cardTitle);
+                cardInfo.appendChild(cardIcon);
+                cardInfo.appendChild(cardTemp);
+                cardInfo.appendChild(cardWind);
+                cardInfo.appendChild(cardHumidity);
+                forecastEl.appendChild(cardInfo);
+                forecastEl.setAttribute("class","row mt-3");
+                todayDay =forecastDay;
+            }
+        }
+    }
