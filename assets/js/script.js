@@ -4,6 +4,14 @@ var APIkey ="b7c8404eb7ec2db5624c4a872e9ce2d3"
 var historyEl = document.getElementById("history")
 var historyList = [];
 var lastSearchedCity = "";
+var todayEl = document.createElement("h2");
+var weatherInfo = document.createElement("ul");
+var temp = document.createElement("li");
+var wind = document.createElement("li");
+var humidity = document.createElement("li");
+var icon = document.createElement("img");
+var forecastTitle = document.createElement("h4");
+var forecastEl = document.getElementById("forecast");
 
 searchBtn.addEventListener("click", function(event){
     event.preventDefault();
@@ -32,12 +40,13 @@ searchBtn.addEventListener("click", function(event){
         .then(function(data) {
             console.log(data)
             today(data);
-            setForecastTitle();
             console.log(data.list[0].weather[0].icon)
             var weatherData = data.list;
+
+            forecastEl.innerHTML = "";
             if(citySearched !== lastSearchedCity ){
-            forecast(weatherData);
-            lastSearchedCity = citySearched;
+                forecast(weatherData);
+                lastSearchedCity = citySearched;
             }
         });
     });
@@ -56,12 +65,7 @@ function checkHistory(exists){
     }
     
 }
-var todayEl = document.createElement("h2");
-var weatherInfo = document.createElement("ul");
-var temp = document.createElement("li");
-var wind = document.createElement("li");
-var humidity = document.createElement("li");
-var icon = document.createElement("img");
+
 function today(element){
     var todayBox = document.getElementById("today");
     var iconURL = "http://openweathermap.org/img/w/" + element.list[0].weather[0].icon + ".png"
@@ -83,8 +87,7 @@ function today(element){
     todayBox.setAttribute("class","border border-dark mt-3")
 }
 
-var forecastTitle = document.createElement("h4");
-var forecastEl = document.getElementById("forecast");
+
 function setForecastTitle(){
     forecastTitle.textContent = "5-Day Forecast:";
     forecastTitle.setAttribute("class", "fw-bold p-2")
@@ -92,16 +95,18 @@ function setForecastTitle(){
 }
 
 var todayDay = parseInt(todayDate = dayjs().format("DD"));
+var cardInfo = document.createElement("ul");
 function forecast(element){
+    setForecastTitle();
         for(j=0;j<element.length;j++){
+            
             var cardTitle = document.createElement("h2");
-        var cardInfo = document.createElement("ul");
-        var cardTemp = document.createElement("li");
-        var cardWind = document.createElement("li");
-        var cardHumidity = document.createElement("li");
-        var cardIcon = document.createElement("img");
+            var cardInfo = document.createElement("ul");
+            var cardTemp = document.createElement("li");
+            var cardWind = document.createElement("li");
+            var cardHumidity = document.createElement("li");
+            var cardIcon = document.createElement("img");
             var forecastDay = parseInt((element[j].dt_txt).slice(8,10));
-
             if(todayDay !== forecastDay){
                 var iconURL = "http://openweathermap.org/img/w/" + element[j].weather[0].icon + ".png"
                 cardTitle.textContent = (element[j].dt_txt).slice(8,10) + "/" + (element[j].dt_txt).slice(5, 7) + "/" + (element[j].dt_txt).slice(0, 4);
