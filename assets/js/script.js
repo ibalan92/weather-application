@@ -71,7 +71,7 @@ function today(element){
     var todayBox = document.getElementById("today");
     var iconURL = "http://openweathermap.org/img/w/" + element.list[0].weather[0].icon + ".png"
     todayDate = dayjs().format("DD/M/YYYY");
-    todayEl.textContent = element.city.name + " " + todayDate + " ";
+    todayEl.textContent = citySearched + " " + todayDate + " ";
     todayEl.setAttribute("class", "p-2")
     var celsius = Math.round(element.list[0].main.temp - 273.15);
     temp.textContent = "Temp: " + celsius + " °C";
