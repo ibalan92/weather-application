@@ -15,7 +15,7 @@ var forecastEl = document.getElementById("forecast");
 
 init();
 
-searchBtn.addEventListener("click", function(event){
+function getData(event){
     event.preventDefault();
     citySearched = city.value.charAt(0).toUpperCase() + city.value.slice(1);
     if(citySearched !== "" && citySearched !== lastSearchedCity){
@@ -55,7 +55,8 @@ searchBtn.addEventListener("click", function(event){
     });
     }
 
-});
+}
+searchBtn.addEventListener("click", getData);
 
 function checkHistory(exists){
     if( historyList.includes(exists) === false){
