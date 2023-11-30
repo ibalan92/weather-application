@@ -1,7 +1,7 @@
-var searchBtn = document.getElementById("search-button")
-var city = document.getElementById("search-input")
-var APIkey ="b7c8404eb7ec2db5624c4a872e9ce2d3"
-var historyEl = document.getElementById("history")
+var searchBtn = document.getElementById("search-button");
+var city = document.getElementById("search-input");
+var APIkey ="b7c8404eb7ec2db5624c4a872e9ce2d3";
+var historyEl = document.getElementById("history");
 var historyList = [];
 var lastSearchedCity = "";
 var todayEl = document.createElement("h2");
@@ -37,18 +37,14 @@ function getData(){
           .then(function (data) {
             var lat = data[0].lat;
             var lon = data[0].lon;
-    
-    
             searchURL = "https://api.openweathermap.org/data/2.5/forecast?lat="+ lat + "&lon=" + lon +"&appid=" + APIkey;
             fetch(searchURL)
             .then(function (response) {
                 return response.json();
-    
             })
             .then(function(data) {
                 today(data);
                 var weatherData = data.list;
-    
                 forecastEl.innerHTML = "";
                 todayDay = parseInt(todayDate = dayjs().format("DD"));
                 if(citySearched !== lastSearchedCity ){
@@ -57,7 +53,7 @@ function getData(){
                 }
             });
         });
-        }
+    }
 }
 
 //Displays the weather when the search button is pressed 
@@ -69,7 +65,7 @@ function checkHistory(exists){
         historyList.push(exists);
         localStorage.setItem("historyCities", JSON.stringify(historyList));
         var button = document.createElement("button");
-        button.setAttribute("class", "historyButton btn btn-secondary text-dark p-2")
+        button.setAttribute("class", "historyButton btn btn-secondary text-dark p-2");
         button.textContent = exists;
         historyEl.appendChild(button);
     }
@@ -82,7 +78,7 @@ function init(){
         historyList = storedCities;
         for(var i=0;i<historyList.length;i++){
             var button = document.createElement("button");
-            button.setAttribute("class", "historyButton btn btn-secondary text-dark p-2")
+            button.setAttribute("class", "historyButton btn btn-secondary text-dark p-2");
             button.textContent = historyList[i];
             historyEl.appendChild(button);
         }  
@@ -92,10 +88,10 @@ function init(){
 //Creates the weather elements for today 
 function today(element){
     var todayBox = document.getElementById("today");
-    var iconURL = "http://openweathermap.org/img/w/" + element.list[0].weather[0].icon + ".png"
-    todayDate = dayjs().format("DD/M/YYYY");
+    var iconURL = "http://openweathermap.org/img/w/" + element.list[0].weather[0].icon + ".png";
+    var todayDate = dayjs().format("DD/M/YYYY");
     todayEl.textContent = citySearched + " " + todayDate + " ";
-    todayEl.setAttribute("class", "p-2")
+    todayEl.setAttribute("class", "p-2");
     var celsius = Math.round(element.list[0].main.temp - 273.15);
     temp.textContent = "Temp: " + celsius + " °C";
     wind.textContent = "Wind: " + element.list[0].wind.speed + " KPH";
@@ -108,13 +104,13 @@ function today(element){
     weatherInfo.appendChild(humidity);
     todayBox.appendChild(todayEl);
     todayBox.appendChild(weatherInfo);
-    todayBox.setAttribute("class","border border-dark mt-3")
+    todayBox.setAttribute("class","border border-dark mt-3");
 }
 
 //Dynamically add title to forecast 
 function setForecastTitle(){
     forecastTitle.textContent = "5-Day Forecast:";
-    forecastTitle.setAttribute("class", "fw-bold p-2")
+    forecastTitle.setAttribute("class", "fw-bold p-2");
     forecastEl.appendChild(forecastTitle);
 }
 
