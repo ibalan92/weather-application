@@ -115,7 +115,7 @@ function forecast(element){
                 cardTemp.textContent = "Temp: " + celsius + " °C";
                 cardWind.textContent = "Wind: " + element[j].wind.speed + " KPH";
                 cardHumidity.textContent = "Humidity: " + element[j].main.humidity + "%";
-                cardInfo.setAttribute("class", "col list-unstyled me-2 d-grid gap-3 border border-dark");
+                cardInfo.setAttribute("class", "col list-unstyled p-2 me-5 d-grid gap-3 border border-dark");
                 cardIcon.setAttribute("src", iconURL);
                 cardInfo.appendChild(cardTitle);
                 cardInfo.appendChild(cardIcon);
