@@ -17,7 +17,7 @@ init();
 
 searchBtn.addEventListener("click", function(event){
     event.preventDefault();
-    citySearched = city.value;
+    citySearched = city.value.charAt(0).toUpperCase() + city.value.slice(1);
     if(citySearched !== "" && citySearched !== lastSearchedCity){
     console.log(city.value);
     checkHistory(citySearched);
