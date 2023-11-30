@@ -12,6 +12,8 @@ var humidity = document.createElement("li");
 var icon = document.createElement("img");
 var forecastTitle = document.createElement("h4");
 var forecastEl = document.getElementById("forecast");
+var todayDay = parseInt(todayDate = dayjs().format("DD"));
+var cardInfo = document.createElement("ul");
 
 init();
 function renderData(event){
@@ -60,6 +62,7 @@ function getData(){
 }
 searchBtn.addEventListener("click", renderData);
 
+
 function checkHistory(exists){
     if( historyList.includes(exists) === false){
         historyList.push(exists);
@@ -70,7 +73,6 @@ function checkHistory(exists){
         button.textContent = exists;
         historyEl.appendChild(button);
     }
-    
 }
 
 
@@ -83,7 +85,7 @@ function init(){
             button.setAttribute("class", "historyButton btn btn-secondary text-dark p-2")
             button.textContent = historyList[i];
             historyEl.appendChild(button);
-        }
+        }  
     }
 }
 
@@ -115,8 +117,7 @@ function setForecastTitle(){
     forecastEl.appendChild(forecastTitle);
 }
 
-var todayDay = parseInt(todayDate = dayjs().format("DD"));
-var cardInfo = document.createElement("ul");
+
 function forecast(element){
     setForecastTitle();
         for(j=0;j<element.length;j++){  
@@ -148,12 +149,11 @@ function forecast(element){
             }
         }
     }
-var buttons = document.querySelectorAll(".historyButton")
-// console.log(buttons)
+var buttonsParent = document.getElementById("history")
 
-for(var i=0;i<buttons.length;i++){
-    buttons[i].addEventListener("click",function() {
-        citySearched = this.textContent || this.innerText;
+buttonsParent.addEventListener("click", function(event){
+    if(event.target.matches(".historyButton")){
+        citySearched = event.target.textContent || event.target.innerText;
         getData();
-    })
-}
+    }
+})
