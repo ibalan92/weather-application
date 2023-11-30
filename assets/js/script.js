@@ -28,7 +28,7 @@ function renderData(event){
 function getData(){
     if(citySearched !== "" && citySearched !== lastSearchedCity){
         checkHistory(citySearched);
-        var queryURL = "http://api.openweathermap.org/geo/1.0/direct?q="+ citySearched + "&limit=5&appid=" + APIkey
+        var queryURL = "https://api.openweathermap.org/geo/1.0/direct?q="+ citySearched + "&limit=5&appid=" + APIkey
                 
         fetch(queryURL)
           .then(function (response) {
@@ -88,7 +88,7 @@ function init(){
 //Creates the weather elements for today 
 function today(element){
     var todayBox = document.getElementById("today");
-    var iconURL = "http://openweathermap.org/img/w/" + element.list[0].weather[0].icon + ".png";
+    var iconURL = "https://openweathermap.org/img/w/" + element.list[0].weather[0].icon + ".png";
     var todayDate = dayjs().format("DD/M/YYYY");
     todayEl.textContent = citySearched + " " + todayDate + " ";
     todayEl.setAttribute("class", "p-2");
@@ -126,7 +126,7 @@ function forecast(element){
             var cardIcon = document.createElement("img");
             var forecastDay = parseInt((element[j].dt_txt).slice(8,10));
             if(todayDay !== forecastDay){
-                var iconURL = "http://openweathermap.org/img/w/" + element[j].weather[0].icon + ".png"
+                var iconURL = "https://openweathermap.org/img/w/" + element[j].weather[0].icon + ".png"
                 cardTitle.textContent = (element[j].dt_txt).slice(8,10) + "/" + (element[j].dt_txt).slice(5, 7) + "/" + (element[j].dt_txt).slice(0, 4);
                 cardTitle.setAttribute("class", "p-1 fs-4")
                 var celsius = Math.round(element[j].main.temp - 273.15);
