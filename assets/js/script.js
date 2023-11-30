@@ -14,49 +14,51 @@ var forecastTitle = document.createElement("h4");
 var forecastEl = document.getElementById("forecast");
 
 init();
-
-function getData(event){
+function renderData(event){
     event.preventDefault();
     citySearched = city.value.charAt(0).toUpperCase() + city.value.slice(1);
-    if(citySearched !== "" && citySearched !== lastSearchedCity){
-    console.log(city.value);
-    checkHistory(citySearched);
-    var queryURL = "http://api.openweathermap.org/geo/1.0/direct?q="+ citySearched + "&limit=5&appid=" + APIkey
-            
-    fetch(queryURL)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        var lat = data[0].lat;
-        var lon = data[0].lon;
-
-        console.log(data);
-
-        searchURL = "https://api.openweathermap.org/data/2.5/forecast?lat="+ lat + "&lon=" + lon +"&appid=" + APIkey;
-        fetch(searchURL)
-        .then(function (response) {
-            return response.json();
-
-        })
-        .then(function(data) {
-            console.log(data)
-            today(data);
-            console.log(data.list[0].weather[0].icon)
-            var weatherData = data.list;
-
-            forecastEl.innerHTML = "";
-            todayDay = parseInt(todayDate = dayjs().format("DD"));
-            if(citySearched !== lastSearchedCity ){
-                forecast(weatherData);
-                lastSearchedCity = citySearched;
-            }
-        });
-    });
-    }
-
+    getData();
 }
-searchBtn.addEventListener("click", getData);
+
+function getData(){
+    if(citySearched !== "" && citySearched !== lastSearchedCity){
+        console.log(city.value);
+        checkHistory(citySearched);
+        var queryURL = "http://api.openweathermap.org/geo/1.0/direct?q="+ citySearched + "&limit=5&appid=" + APIkey
+                
+        fetch(queryURL)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            var lat = data[0].lat;
+            var lon = data[0].lon;
+    
+            console.log(data);
+    
+            searchURL = "https://api.openweathermap.org/data/2.5/forecast?lat="+ lat + "&lon=" + lon +"&appid=" + APIkey;
+            fetch(searchURL)
+            .then(function (response) {
+                return response.json();
+    
+            })
+            .then(function(data) {
+                console.log(data)
+                today(data);
+                console.log(data.list[0].weather[0].icon)
+                var weatherData = data.list;
+    
+                forecastEl.innerHTML = "";
+                todayDay = parseInt(todayDate = dayjs().format("DD"));
+                if(citySearched !== lastSearchedCity ){
+                    forecast(weatherData);
+                    lastSearchedCity = citySearched;
+                }
+            });
+        });
+        }
+}
+searchBtn.addEventListener("click", renderData);
 
 function checkHistory(exists){
     if( historyList.includes(exists) === false){
@@ -64,7 +66,7 @@ function checkHistory(exists){
         localStorage.setItem("historyCities", JSON.stringify(historyList));
         console.log(historyList);
         var button = document.createElement("button");
-        button.setAttribute("class", "btn btn-secondary text-dark p-2")
+        button.setAttribute("class", "historyButton btn btn-secondary text-dark p-2")
         button.textContent = exists;
         historyEl.appendChild(button);
     }
@@ -78,7 +80,7 @@ function init(){
         historyList = storedCities;
         for(var i=0;i<historyList.length;i++){
             var button = document.createElement("button");
-            button.setAttribute("class", "btn btn-secondary text-dark p-2")
+            button.setAttribute("class", "historyButton btn btn-secondary text-dark p-2")
             button.textContent = historyList[i];
             historyEl.appendChild(button);
         }
@@ -146,3 +148,12 @@ function forecast(element){
             }
         }
     }
+var buttons = document.querySelectorAll(".historyButton")
+// console.log(buttons)
+
+for(var i=0;i<buttons.length;i++){
+    buttons[i].addEventListener("click",function() {
+        citySearched = this.textContent || this.innerText;
+        getData();
+    })
+}
